@@ -1,0 +1,26 @@
+.text {
+  margin-left: auto;
+  margin-right: auto;
+
+  text-align: center;
+  font-family: helvetica, arial, sans-serif;
+}
+
+.copyright {
+  font-family: helvetica, arial, sans-serif;
+  bottom: 5px;
+  position:absolute;
+  font-size: 10px;
+}
+
+#green {
+  color: green;
+}
+
+#red {
+  color: red;
+}
+
+#verdict {
+  font-size: 500px;
+}
