@@ -17,8 +17,7 @@
 
     <script>
       $.ajax({
-        crossDomain: true,
-        url: "https://data.buienradar.nl/2.0/feed/json",
+        url: "http://data.buienradar.nl/2.0/feed/json",
         dataType: 'json',
         success:function(json){
           var temperature = json["actual"]["stationmeasurements"][40]["temperature"];
