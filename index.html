@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Is er warme chocolademelk op Het Paalhuis?</title>
+  </head>
+  <body>
+    <div class="text">
+      <div id="verdict"></div>
+      <div id="temp"></div>
+    </div>
+
+    <div class="copyright">Deze site is mede mogelijk gemaakt foor <a href="https://paalhuis.nl">Het Paalhuis</a> met dank aan <a href="https://buienradar.nl">Buienradar.nl</a> n.a.v. ALV-besluit 223 van <a href=https://csvalpha.nl">C.S.V. Alpha</a></div>
+
+    <script>
+      function ajax_get(url, callback) {
+          var xmlhttp = new XMLHttpRequest();
+          xmlhttp.onreadystatechange = function() {
+              if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                  console.log('responseText:' + xmlhttp.responseText);
+                  try {
+                      var data = JSON.parse(xmlhttp.responseText);
+                  } catch(err) {
+                      console.log(err.message + " in " + xmlhttp.responseText);
+                      return;
+                  }
+                  callback(data);
+              }
+          };
+
+          xmlhttp.open("GET", url, true);
+          xmlhttp.send();
+      }
+
+      ajax_get('https://data.buienradar.nl/2.0/feed/json', function(data) {
+        var temperature = data["actual"]["stationmeasurements"][40]["temperature"];
+        document.getElementById("temp").innerHTML = "De temperatuur in Hengelo is op dit moment: " + temperature +  "°C";
+
+        if (temperature < 10) {
+          document.getElementById("verdict").innerHTML = "<div id=\"green\">Jaa!</div>";
+        } else if (temperature >= 10){
+          document.getElementById("verdict").innerHTML = "<div id=\"red\">NEE!</div>";
+        } else {
+          document.getElementById("verdict").innerHTML = "???";
+        }
+      });
+
+    </script>
+  </body>
+</html>
