@@ -2,21 +2,24 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="style.css"></link>
     <title>Is er warme chocolademelk op Het Paalhuis?</title>
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>  </head>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <!-- <script type="text/javascript" src="js/jquery.ajax-cross-origin.min.js"></script> -->
+  </head>
   <body>
     <div class="text">
       <div id="verdict"></div>
-      <div >De temperatuur in Hengelo is op dit moment: </div><div id="temp" />°C"</div>
+      <div >De temperatuur in Hengelo is op dit moment: <div id="temp"></div> °C</div>
     </div>
 
-    <div class="copyright">Deze site is mede mogelijk gemaakt door <a href="https://paalhuis.nl">Het Paalhuis</a> met dank aan <a href="https://buienradar.nl">Buienradar.nl</a> n.a.v. ALV-besluit 223 der <a href=https://csvalpha.nl">C.S.V. Alpha"</a></div>
+    <div class="copyright">Deze site is mede mogelijk gemaakt door <a href="https://paalhuis.nl">Het Paalhuis</a> met dank aan <a href="https://buienradar.nl">Buienradar.nl</a> n.a.v. ALV-besluit 223 der <a href="https://csvalpha.nl">C.S.V. Alpha</a></div>
 
     <script>
       $.ajax({
+        crossOrigin: true,
         url: "https://data.buienradar.nl/2.0/feed/json",
-        dataType: 'json', // Notice! JSONP <-- P (lowercase)
+        dataType: 'json',
         success:function(json){
           var temperature = json["actual"]["stationmeasurements"][40]["temperature"];
           document.getElementById("temp").innerHTML = temperature;
