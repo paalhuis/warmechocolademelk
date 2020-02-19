@@ -10,6 +10,7 @@
   <body>
     <div class="text">
       <div id="verdict">???</div>
+      <div id="explanation"></div>
       <div >De temperatuur in Hengelo is op dit moment: <div id="temp">???</div> °C</div>
     </div>
 
@@ -21,11 +22,29 @@
         dataType: 'json',
         success: function(json){
           var temperature = json["actual"]["stationmeasurements"][40]["temperature"];
+          var feelTemperature = json["actual"]["stationmeasurements"][40]["feeltemperature"];
+          var d = new Date();
+          var day = d.getDay();
+          var time = d.getHours();
+          var iemandThuis = ((time > 6 || time < 2) && day !== 5) && (day === 5 && (time < 5 || time > 6));
+          console.log(iemandThuis);
           document.getElementById("temp").innerHTML = temperature;
-          if (temperature < 10) {
+          if (temperature < 5) {
             document.getElementById("verdict").innerHTML = "<div id=\"green\">Jaa!</div>";
-          } else if (temperature >= 10){
-            document.getElementById("verdict").innerHTML = "<div id=\"red\">NEE!</div>";
+            if (!iemandThuis) {
+              document.getElementById("explanation").innerHTML = "<div id=\"orange\">Je moet waarschijnlijk wel de deurbel net zo lang ingedrukt houden totdat iemand uit bed komt.</div>";
+            }
+          } else if (temperature >= 5){
+            document.getElementById("verdict").innerHTML = "<div id=\"red\">Nee!</div>";
+            if (feelTemperature < 10) {
+              if (iemandThuis) {
+                document.getElementById("explanation").innerHTML = "<div id=\"orange\">Maar als je beargumenteerd waarom we de gevoelstemperatuur moeten gebruiken kun je wel wat krijgen</div>"
+              } else {
+                document.getElementById("explanation").innerHTML = "<div id=\"orange\">Maar als je beargumenteerd waarom we de gevoelstemperatuur moeten gebruiken kun je wel wat krijgen. " +
+                        "<br>Daarnaast moet je waarschijnlijk ook de deurbel net zo lang ingedrukt houden totdat iemand uit bed komt.</div>"
+              }
+
+            }
           } else {
             document.getElementById("verdict").innerHTML = "???";
           }

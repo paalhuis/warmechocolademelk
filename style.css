@@ -25,6 +25,14 @@
   color: red;
 }
 
+#orange {
+  color: orange;
+}
+
 #verdict {
   font-size: 500px;
+}
+
+#explanation {
+  font-size: 40px;
 }
