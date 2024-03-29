@@ -21,13 +21,20 @@
         url: "https://data.buienradar.nl/2.0/feed/json",
         dataType: 'json',
         success: function(json){
-          var temperature = json["actual"]["stationmeasurements"][40]["temperature"];
-          var feelTemperature = json["actual"]["stationmeasurements"][40]["feeltemperature"];
+          var stationmeasurements = json["actual"]["stationmeasurements"] ;
+          var temperature = json["actual"]["stationmeasurements"][0]["temperature"];
+          var feelTemperature = json["actual"]["stationmeasurements"][0]["feeltemperature"];
+          for (let i = 0; i < stationmeasurements.length; i++) {
+            if (stationmeasurements[i]["stationname"] === "Meetstation Twente") {
+                var temperature = stationmeasurements[i]["temperature"];
+                var feelTemperature = stationmeasurements[i]["feeltemperature"];
+                break;
+            }
+          }
           var d = new Date();
           var day = d.getDay();
           var time = d.getHours();
           var iemandThuis = ((time > 6 || time < 2) && day !== 5) || (day === 5 && (time < 5 || time > 6));
-          console.log(iemandThuis);
           document.getElementById("temp").innerHTML = temperature;
           if (temperature < 10) {
             document.getElementById("verdict").innerHTML = "<div id=\"green\">Jaa!</div>";
